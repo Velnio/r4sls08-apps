@@ -1,0 +1,32 @@
+{
+  "apparmor": true,
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
+  "boot": "manual",
+  "description": "Authenticated, read-only health metrics for a qualified HA pilot",
+  "hassio_api": true,
+  "hassio_role": "default",
+  "homeassistant_api": true,
+  "host_network": true,
+  "image": "ghcr.io/velnio/velnio-health-agent",
+  "init": false,
+  "name": "Velnio Health Agent",
+  "options": {
+    "interval_seconds": 30,
+    "listen_address": "127.0.0.1",
+    "stale_seconds": 90,
+    "timeout_seconds": 5
+  },
+  "schema": {
+    "interval_seconds": "int(5,300)",
+    "listen_address": "str",
+    "stale_seconds": "int(10,900)",
+    "timeout_seconds": "int(1,5)"
+  },
+  "slug": "velnio_health",
+  "startup": "application",
+  "url": "https://github.com/Velnio/velnio-backup",
+  "version": "0.1.2"
+}
