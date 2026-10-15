@@ -14,12 +14,14 @@
   "init": false,
   "name": "Velnio Health Agent",
   "options": {
+    "heartbeat_enabled": false,
     "interval_seconds": 30,
     "listen_address": "127.0.0.1",
     "stale_seconds": 90,
     "timeout_seconds": 5
   },
   "schema": {
+    "heartbeat_enabled": "bool",
     "interval_seconds": "int(5,300)",
     "listen_address": "str",
     "stale_seconds": "int(10,900)",
@@ -28,5 +30,5 @@
   "slug": "velnio_health",
   "startup": "application",
   "url": "https://github.com/Velnio/velnio-backup",
-  "version": "0.1.2"
+  "version": "0.2.0"
 }

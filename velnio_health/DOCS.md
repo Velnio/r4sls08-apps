@@ -1,16 +1,19 @@
 # Velnio Health Agent pilot
 
-This app packages existing65/66/67 modules. Its live scope is Core API status,
-Supervisor health/support and free space on the Supervisor data volume. It does
-not yet compose canary, entity/device checks, heartbeat68, or full lifecycle69.
-No HA service calls, repairs, backup/restore, Docker socket, host PID/proc, hardware
-capabilities, external receivers or persistent source telemetry are required.
+The default metrics-only profile collects Core API status, Supervisor health/support
+and free space on the Supervisor data volume. The source also composes an opt-in
+heartbeat runtime with canary, required service, critical entity and device checks.
+The private 0.2.0 image has qualified metrics-only and enabled image smoke coverage.
+Native HA lifecycle acceptance remains a separate gate.
+No HA service calls, repairs, backup/restore, Docker socket, host PID/proc or hardware
+capabilities are required.
 
 The app requests `homeassistant_api:true` and `hassio_api:true` with role `default`.
 Supervisor injects its token; it is never printed or written to a new file. Only
-GET `/core/api/`, `/supervisor/info`, `/host/info` are implemented by our client.
+GET `/core/api/`, `/supervisor/info`, `/host/info` are used by the metrics collectors.
+The enabled profile additionally reads explicitly bound Core entity states.
 These are application-enforced restrictions: HA's Core permission is broader
-than those three requests. There is no claim of a server-enforced read-only Core
+than these read routes. There is no claim of a server-enforced read-only Core
 token. Default Supervisor role allows info routes; manager/admin is unnecessary.
 
 The pilot profile is Supervisor2026.09.3. Other versions fail the Supervisor
@@ -24,18 +27,23 @@ and [Supervisor role source](https://github.com/home-assistant/supervisor/blob/2
 
 The public HA app catalog is [Velnio/r4sls08-apps](https://github.com/Velnio/r4sls08-apps).
 Add that repository in HA's App Store and select **Velnio Health Agent**.
-The image `ghcr.io/velnio/velnio-health-agent:0.1.2` remains private; Supervisor's
+The image `ghcr.io/velnio/velnio-health-agent:0.2.0` remains private; Supervisor's
 existing GHCR registry account must have read access to this package. No token
 belongs in the catalog, app options, URL, Git or issue tracker. If access fails,
 stop and resolve that specific registry permission before installing.
 
-Private source releases use tag `health-v0.1.2` in `Velnio/velnio-backup`.
+Version `0.2.0` is published privately from `health-v0.2.0` in
+`Velnio/velnio-backup`. Its authenticated original build evidence qualifies
+metrics-only and enabled image smoke coverage on amd64 and arm64. Native HA
+rollout and lifecycle acceptance remain separate gates. Private source releases
+use immutable `health-vX.Y.Z` tags.
 The pinned CI workflow builds a wheel/context once, tests amd64 and arm64 images
 with disposable data volumes and no network, and checks non-root operation,
 authentication, graceful stop and token continuity. The pushed immutable index
 must match both tested image config digests. Existing version tags are refused;
 package visibility must remain private. Promotion uses only the successful
-workflow artifact's config.json, DOCS.md and CHANGELOG.md. Dockerfile, wheels,
+workflow artifact's config.json, DOCS.md and CHANGELOG.md, with publication-status
+prose corrected in the public docs. Dockerfile, wheels,
 source and private build evidence never enter the public catalog. Installer
 releases preserve this app's metadata and version independently.
 
@@ -69,6 +77,52 @@ GET `/metrics` requires exactly one matching Bearer header; unknown paths and
 control methods are rejected. Collection runs independently every30seconds;
 scrapes read snapshots. Core failure must leave the agent loop running.
 CPU/RSS/p95 targets and encrypted cross-peer scraping require their own evidence.
+
+## Optional heartbeat profile and qualification
+
+`heartbeat_enabled` defaults to `false`; disabled startup does not read the private
+heartbeat profile or handoff. Enabled startup requires strict private
+`/data/agent/heartbeat-profile.json` and its local handoff reference, with approved
+required-check bindings, both exact role plan keys and an independently approved
+HTTPS origin/IP. Custody checks reject unsafe ownership, permissions and links;
+private inputs and provider URLs never belong in app options or the public catalog.
+The roles are `agent_alive` and `local_functional`. Required producers feed accepted
+generations and a cycle barrier; independent senders sample only current evidence.
+Close fences further attempts and both sender joins share one five-second shutdown
+budget. Stop/start creates a new cycle owner and does not replay functional success.
+A retained metrics token or HTTP acknowledgement does not prove functional health.
+
+Release and qualification tools accept
+`--requested-profile {metrics_only,heartbeat_enabled}`, defaulting to `metrics_only`.
+Legacy original build records without `profile_coverage` qualify only metrics-only.
+Enabled qualification requires coverage retained inside the original authenticated
+build artifact, with kind `original_image_smoke`, the same source commit and both
+exact amd64/arm64 tested image config digests, and ordered profiles
+`["metrics_only", "heartbeat_enabled"]`. Explicit malformed coverage fails closed
+for either request. A qualifier consumes coverage only from the original
+authenticated artifact; local sidecars, environment flags and source presence
+cannot augment it.
+
+Release dispatch accepts `requested_profile`, defaulting to `metrics_only`. Tag
+pushes for `health-v0.2.0` select `heartbeat_enabled`; other tag versions retain
+metrics-only selection. Both platform smoke commands must finish successfully and
+write their original reports after cleanup. Capture accepts explicit
+`--amd64-report` and `--arm64-report` paths, checks each report's exact schema,
+source commit, version, platform, tested config and matching profile list, then
+aggregates coverage into `build-evidence.json`. The original artifact remains
+exactly two files: `build-evidence.json` and `build-manifest.json`. Missing or
+mismatched reports cannot create enabled coverage. Metrics-only smoke cannot prove
+enabled coverage; legacy artifacts remain unqualified for enabled requests.
+Profile requests also reach the read-only existing-artifact qualification and
+metadata-only catalog export paths. Per-platform reports are intermediate private
+build inputs, not extra public catalog metadata.
+
+The 0.2.0 private image passed original metrics-only and enabled image smokes on
+both platforms. Native manifest/custody/watchdog/lifecycle, A14 VPN-off/WAN-on,
+A31 Core outage, A40 TLS/provider receipt, A41 outage/restart/no replay and A61 CM5
+budget still require separate scoped evidence. Full VELN-68/69 remains open.
+Authenticated central accepted-cycle consumption is a separate unadopted design;
+an in-process slot, provider last_ping or two polls do not prove two healthy cycles.
 
 ## Acceptance and rollback
 
