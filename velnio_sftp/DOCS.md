@@ -7,13 +7,15 @@ transfer backups itself and does not need to keep running.
 
 ## Availability
 
-This is prepared catalog metadata for app **0.1.0**. Its private image,
-`ghcr.io/velnio/velnio-sftp-app:0.1.0`, has not yet been published or deployed by
-this change. Publish the catalog entry only after both image architectures have
-been qualified and the image digest has been recorded.
+App **0.1.0** uses the published private image
+`ghcr.io/velnio/velnio-sftp-app:0.1.0`, qualified on linux/amd64 and linux/arm64.
+Its immutable multiarch digest is
+`sha256:31101884b6156d0526764d95536415da391d379592a60ff1003624148cc0e9fa`.
+The [release qualification](https://github.com/Velnio/velnio-backup/actions/runs/38977251483)
+records the committed source and exact tested platform image identities.
 
 The catalog is [Velnio/r4sls08-apps](https://github.com/Velnio/r4sls08-apps).
-When released, installation requires Supervisor's registry account to have
+Installation requires Supervisor's registry account to have
 read/pull access to the private image. No GitHub token is needed in app options
 or in the running app. Never put credentials in this repository or in logs.
 
