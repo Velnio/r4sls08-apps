@@ -1,0 +1,41 @@
+{
+  "name": "Velnio SFTP",
+  "version": "0.1.0",
+  "slug": "velnio_sftp",
+  "description": "Installs and updates the Velnio SFTP integration for native Home Assistant backups.",
+  "arch": [
+    "amd64",
+    "aarch64"
+  ],
+  "image": "ghcr.io/velnio/velnio-sftp-app",
+  "startup": "once",
+  "boot": "manual",
+  "init": false,
+  "stage": "experimental",
+  "homeassistant": "2026.9.3",
+  "url": "https://github.com/Velnio/velnio-backup",
+  "map": [
+    {
+      "type": "homeassistant_config",
+      "read_only": false,
+      "path": "/config"
+    }
+  ],
+  "options": {
+    "operation": "status",
+    "restart_core": false,
+    "health_timeout": 120
+  },
+  "schema": {
+    "operation": "list(status|install|update)",
+    "restart_core": "bool",
+    "health_timeout": "int(10,300)"
+  },
+  "hassio_api": true,
+  "hassio_role": "homeassistant",
+  "homeassistant_api": true,
+  "host_network": false,
+  "docker_api": false,
+  "full_access": false,
+  "privileged": []
+}
