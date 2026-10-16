@@ -1,11 +1,9 @@
 # Velnio Health Agent pilot
 
 The default metrics-only profile collects Core API status, Supervisor health/support
-and free space on the Supervisor data volume. The app also composes an opt-in
+and free space on the Supervisor data volume. The source also composes an opt-in
 heartbeat runtime with canary, required service, critical entity and device checks.
-Version 0.3.0 has qualified synthetic image coverage for metrics, heartbeat and
-optional host metrics on both supported architectures. Real host rollout and
-native acceptance for this version remain pending.
+This source implementation does not qualify an enabled image or native HA lifecycle.
 No HA service calls, repairs, backup/restore, Docker socket, host PID/proc or hardware
 capabilities are required.
 
@@ -28,22 +26,20 @@ and [Supervisor role source](https://github.com/home-assistant/supervisor/blob/2
 
 The public HA app catalog is [Velnio/r4sls08-apps](https://github.com/Velnio/r4sls08-apps).
 Add that repository in HA's App Store and select **Velnio Health Agent**.
-The image `ghcr.io/velnio/velnio-health-agent:0.3.0` remains private; Supervisor's
+The image `ghcr.io/velnio/velnio-health-agent:0.3.2` remains private; Supervisor's
 existing GHCR registry account must have read access to this package. No token
 belongs in the catalog, app options, URL, Git or issue tracker. If access fails,
 stop and resolve that specific registry permission before installing.
 
-Version `0.3.0` is published as a qualified private image, and this catalog
-promotes its authenticated metadata artifact. Its private source tag is
-`health-v0.3.0` in `Velnio/velnio-backup`. Catalog publication does not establish
-real host source freshness or native pilot acceptance.
+The release source version is `0.3.2`. Private source releases use immutable
+`health-vX.Y.Z` tags in `Velnio/velnio-backup`; publish catalog metadata only after
+authenticated original image qualification.
 The pinned CI workflow builds a wheel/context once, tests amd64 and arm64 images
 with disposable data volumes and no network, and checks non-root operation,
 authentication, graceful stop and token continuity. The pushed immutable index
 must match both tested image config digests. Existing version tags are refused;
 package visibility must remain private. Promotion uses only the successful
-workflow artifact's config.json, DOCS.md and CHANGELOG.md, with publication-status
-prose corrected in the public docs. Dockerfile, wheels,
+workflow artifact's config.json, DOCS.md and CHANGELOG.md. Dockerfile, wheels,
 source and private build evidence never enter the public catalog. Installer
 releases preserve this app's metadata and version independently.
 
@@ -93,23 +89,20 @@ budget. Stop/start creates a new cycle owner and does not replay functional succ
 A retained metrics token or HTTP acknowledgement does not prove functional health.
 
 Release and qualification tools accept
-`--requested-profile {metrics_only,heartbeat_enabled,host_metrics_enabled}`;
-the helper CLIs default to `metrics_only`.
+`--requested-profile {metrics_only,heartbeat_enabled}`, defaulting to `metrics_only`.
 Legacy original build records without `profile_coverage` qualify only metrics-only.
 Enabled qualification requires coverage retained inside the original authenticated
 build artifact, with kind `original_image_smoke`, the same source commit and both
 exact amd64/arm64 tested image config digests, and ordered profiles
-`["metrics_only", "heartbeat_enabled"]`. Host qualification requires cumulative
-coverage `["metrics_only", "heartbeat_enabled", "host_metrics_enabled"]`. Explicit
-malformed coverage fails closed for every request. A qualifier consumes coverage
-only from the original authenticated artifact; local sidecars, environment flags and source presence
+`["metrics_only", "heartbeat_enabled"]`. Explicit malformed coverage fails closed
+for either request. A qualifier consumes coverage only from the original
+authenticated artifact; local sidecars, environment flags and source presence
 cannot augment it.
 
-Release dispatch accepts `requested_profile`, defaulting to `host_metrics_enabled`.
-Tag pushes for `health-v0.3.0` select `host_metrics_enabled`; `health-v0.2.0` selects
-`heartbeat_enabled`, and other versions retain metrics-only selection. Both
-platform smoke commands must finish successfully and write their original
-reports after cleanup. Capture accepts explicit
+Release dispatch accepts `requested_profile`, defaulting to `metrics_only`. Tag
+pushes for `health-v0.2.0` select `heartbeat_enabled`; other tag versions retain
+metrics-only selection. Both platform smoke commands must finish successfully and
+write their original reports after cleanup. Capture accepts explicit
 `--amd64-report` and `--arm64-report` paths, checks each report's exact schema,
 source commit, version, platform, tested config and matching profile list, then
 aggregates coverage into `build-evidence.json`. The original artifact remains
@@ -120,10 +113,8 @@ Profile requests also reach the read-only existing-artifact qualification and
 metadata-only catalog export paths. Per-platform reports are intermediate private
 build inputs, not extra public catalog metadata.
 
-The published 0.3.0 image passed the original network-isolated metrics, heartbeat
-and host smoke profiles on amd64 and arm64 (ARM64 under QEMU). Synthetic image
-coverage does not establish real host freshness or native acceptance. Native
-manifest/custody/watchdog/lifecycle, A14 VPN-off/WAN-on,
+These offline gates prepare later image qualification. Enabled image smoke has not
+been run by this change. Native manifest/custody/watchdog/lifecycle, A14 VPN-off/WAN-on,
 A31 Core outage, A40 TLS/provider receipt, A41 outage/restart/no replay and A61 CM5
 budget still require separate scoped evidence. Full VELN-68/69 remains open.
 Authenticated central accepted-cycle consumption is a separate unadopted design;
@@ -146,7 +137,7 @@ Fleet/site identity is not invented by this app. A future accepted fleet render
 uses the existing stable site_id and approved overlay target/reference map; do
 not relabel synthetic fixtures as a real monitoring release.
 
-## Optional host metrics (0.3.0)
+## Optional host metrics
 
 `host_bindings` defaults to `{}`. Existing options that omit it remain compatible.
 The nested schema follows the [official app options/schema syntax](https://developers.home-assistant.io/docs/apps/configuration/#options--schema).
@@ -169,15 +160,14 @@ an enabled pilot's options.
 
 Leave bindings empty until the exact Core/System Monitor source, HAOS scope,
 integration/entity ownership, permissions and source freshness are qualified.
-Dynamic readings require fresh `last_reported`; a REST read cannot renew stale
-source evidence. Temperature is optional. CPU/RAM/boot sensors are not enabled
+Dynamic readings require fresh producer `last_reported`. A fixed read-only
+POST `/core/api/template` reads the live State timestamp, bypassing stale REST JSON
+for unchanged values. It accepts only the explicitly bound host sensor IDs and
+never invokes services or updates state. Reading alone cannot renew source evidence.
+Each measurement expires independently; a stale optional sensor cannot revoke
+fresh siblings. The source freshness limit remains 90 seconds. Temperature is optional. CPU/RAM/boot sensors are not enabled
 or discovered by this app. No host value is guessed or replaced with zero.
 
-The published 0.3.0 release retains cumulative `metrics_only`, `heartbeat_enabled`
-and `host_metrics_enabled` coverage in the original authenticated build artifact,
-bound to its source and both exact image configs. The host probe used the installed
-application composition, scheduler and authenticated export handler with synthetic
-Core/System Monitor inputs and blocked sockets. It covered CPU, RAM, temperature,
-boot/uptime, disk metrics, unit conversions and stale/absent omission. This image
-evidence does not activate host entities or prove their real freshness; the
-scoped native rollout and host source acceptance remain pending.
+The `health-v0.3.x` patch release family selects `host_metrics_enabled` original
+image coverage on both supported architectures. Synthetic image coverage does
+not replace native pilot acceptance. Heartbeat readers remain GET-only.

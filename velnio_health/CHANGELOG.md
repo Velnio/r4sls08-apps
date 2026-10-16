@@ -1,6 +1,14 @@
 # Changelog
 
-## 0.3.0 — qualified private image and catalog metadata
+## 0.3.2 — producer report freshness
+
+- Read live System Monitor producer timestamps through a fixed read-only template,
+  including unchanged values; keep the existing 90-second source freshness limit.
+- Expire individual host samples independently, so a stale optional CPU source
+  cannot hide current RAM, temperature, uptime or data-volume measurements.
+- Preserve existing authentication, heartbeat inputs, listener and permissions.
+
+## 0.3.0 — optional host metrics source (unpublished)
 
 - Add finite optional System Monitor bindings to the HA app options schema;
   new installs remain disk-only with an empty binding map.
@@ -9,28 +17,22 @@
 - Reuse the enabled heartbeat profile's approved StateAPI without new credentials
   or permissions. Host bindings without that bootstrap path fail closed.
 - Preserve heartbeat checks, metrics bearer/token continuity and loopback/NetBird
-  listener policy.
-- Publish the qualified private image and promote its authenticated metadata.
-  Original amd64/arm64 image evidence covers metrics, heartbeat and optional host
-  collection; ARM64 smoke used QEMU. Real host rollout and freshness acceptance
-  remain pending.
+  listener policy. Offline source/package checks do not qualify an image or host.
 
-## 0.2.0 — qualified private image and catalog metadata
+## 0.2.0 — enabled release source (unpublished)
 
 - Wire requested image smoke profiles through both platform builds, original build
   evidence and private metadata qualification. Runtime heartbeat remains disabled
   by default; original metrics-only artifacts retain their legacy qualification.
 - Require two completed source/version/config-bound platform reports before
-  retaining original profile coverage. The private image and catalog metadata
-  were published and the native pilot was updated separately.
+  retaining original profile coverage. No image, native or live run is claimed.
 
 - Gate requested heartbeat profile coverage in the existing release and qualification
   APIs and CLIs, preserving legacy metrics-only original artifacts and provenance.
 - Document the existing opt-in runtime, private profile/handoff custody and the
-  qualified enabled image coverage and remaining full native and live acceptance gates.
+  remaining enabled image, native HA and live acceptance gates.
 - Add offline profile parity and deterministic shared shutdown-budget/no-replay
-  regression coverage. Full heartbeat/provider/outage qualification remains
-  separate from the native image update.
+  regression coverage. No image, native or live qualification is claimed.
 
 ## 0.1.2 — pilot release qualification
 
