@@ -15,6 +15,7 @@
   "name": "Velnio Health Agent",
   "options": {
     "heartbeat_enabled": false,
+    "host_bindings": {},
     "interval_seconds": 30,
     "listen_address": "127.0.0.1",
     "stale_seconds": 90,
@@ -22,6 +23,14 @@
   },
   "schema": {
     "heartbeat_enabled": "bool",
+    "host_bindings": {
+      "boot_timestamp": "str?",
+      "cpu_utilization": "str?",
+      "memory_available": "str?",
+      "memory_used": "str?",
+      "source_profile": "list(core-2026.9.3-haos-systemmonitor|core-2026.10.1-haos-systemmonitor)?",
+      "temperature": "str?"
+    },
     "interval_seconds": "int(5,300)",
     "listen_address": "str",
     "stale_seconds": "int(10,900)",
@@ -30,5 +39,5 @@
   "slug": "velnio_health",
   "startup": "application",
   "url": "https://github.com/Velnio/velnio-backup",
-  "version": "0.2.0"
+  "version": "0.3.0"
 }

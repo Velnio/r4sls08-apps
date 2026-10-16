@@ -1,10 +1,11 @@
 # Velnio Health Agent pilot
 
 The default metrics-only profile collects Core API status, Supervisor health/support
-and free space on the Supervisor data volume. The source also composes an opt-in
+and free space on the Supervisor data volume. The app also composes an opt-in
 heartbeat runtime with canary, required service, critical entity and device checks.
-The private 0.2.0 image has qualified metrics-only and enabled image smoke coverage.
-Native HA lifecycle acceptance remains a separate gate.
+Version 0.3.0 has qualified synthetic image coverage for metrics, heartbeat and
+optional host metrics on both supported architectures. Real host rollout and
+native acceptance for this version remain pending.
 No HA service calls, repairs, backup/restore, Docker socket, host PID/proc or hardware
 capabilities are required.
 
@@ -27,16 +28,15 @@ and [Supervisor role source](https://github.com/home-assistant/supervisor/blob/2
 
 The public HA app catalog is [Velnio/r4sls08-apps](https://github.com/Velnio/r4sls08-apps).
 Add that repository in HA's App Store and select **Velnio Health Agent**.
-The image `ghcr.io/velnio/velnio-health-agent:0.2.0` remains private; Supervisor's
+The image `ghcr.io/velnio/velnio-health-agent:0.3.0` remains private; Supervisor's
 existing GHCR registry account must have read access to this package. No token
 belongs in the catalog, app options, URL, Git or issue tracker. If access fails,
 stop and resolve that specific registry permission before installing.
 
-Version `0.2.0` is published privately from `health-v0.2.0` in
-`Velnio/velnio-backup`. Its authenticated original build evidence qualifies
-metrics-only and enabled image smoke coverage on amd64 and arm64. Native HA
-rollout and lifecycle acceptance remain separate gates. Private source releases
-use immutable `health-vX.Y.Z` tags.
+Version `0.3.0` is published as a qualified private image, and this catalog
+promotes its authenticated metadata artifact. Its private source tag is
+`health-v0.3.0` in `Velnio/velnio-backup`. Catalog publication does not establish
+real host source freshness or native pilot acceptance.
 The pinned CI workflow builds a wheel/context once, tests amd64 and arm64 images
 with disposable data volumes and no network, and checks non-root operation,
 authentication, graceful stop and token continuity. The pushed immutable index
@@ -93,20 +93,23 @@ budget. Stop/start creates a new cycle owner and does not replay functional succ
 A retained metrics token or HTTP acknowledgement does not prove functional health.
 
 Release and qualification tools accept
-`--requested-profile {metrics_only,heartbeat_enabled}`, defaulting to `metrics_only`.
+`--requested-profile {metrics_only,heartbeat_enabled,host_metrics_enabled}`;
+the helper CLIs default to `metrics_only`.
 Legacy original build records without `profile_coverage` qualify only metrics-only.
 Enabled qualification requires coverage retained inside the original authenticated
 build artifact, with kind `original_image_smoke`, the same source commit and both
 exact amd64/arm64 tested image config digests, and ordered profiles
-`["metrics_only", "heartbeat_enabled"]`. Explicit malformed coverage fails closed
-for either request. A qualifier consumes coverage only from the original
-authenticated artifact; local sidecars, environment flags and source presence
+`["metrics_only", "heartbeat_enabled"]`. Host qualification requires cumulative
+coverage `["metrics_only", "heartbeat_enabled", "host_metrics_enabled"]`. Explicit
+malformed coverage fails closed for every request. A qualifier consumes coverage
+only from the original authenticated artifact; local sidecars, environment flags and source presence
 cannot augment it.
 
-Release dispatch accepts `requested_profile`, defaulting to `metrics_only`. Tag
-pushes for `health-v0.2.0` select `heartbeat_enabled`; other tag versions retain
-metrics-only selection. Both platform smoke commands must finish successfully and
-write their original reports after cleanup. Capture accepts explicit
+Release dispatch accepts `requested_profile`, defaulting to `host_metrics_enabled`.
+Tag pushes for `health-v0.3.0` select `host_metrics_enabled`; `health-v0.2.0` selects
+`heartbeat_enabled`, and other versions retain metrics-only selection. Both
+platform smoke commands must finish successfully and write their original
+reports after cleanup. Capture accepts explicit
 `--amd64-report` and `--arm64-report` paths, checks each report's exact schema,
 source commit, version, platform, tested config and matching profile list, then
 aggregates coverage into `build-evidence.json`. The original artifact remains
@@ -117,8 +120,10 @@ Profile requests also reach the read-only existing-artifact qualification and
 metadata-only catalog export paths. Per-platform reports are intermediate private
 build inputs, not extra public catalog metadata.
 
-The 0.2.0 private image passed original metrics-only and enabled image smokes on
-both platforms. Native manifest/custody/watchdog/lifecycle, A14 VPN-off/WAN-on,
+The published 0.3.0 image passed the original network-isolated metrics, heartbeat
+and host smoke profiles on amd64 and arm64 (ARM64 under QEMU). Synthetic image
+coverage does not establish real host freshness or native acceptance. Native
+manifest/custody/watchdog/lifecycle, A14 VPN-off/WAN-on,
 A31 Core outage, A40 TLS/provider receipt, A41 outage/restart/no replay and A61 CM5
 budget still require separate scoped evidence. Full VELN-68/69 remains open.
 Authenticated central accepted-cycle consumption is a separate unadopted design;
@@ -140,3 +145,39 @@ separate explicit step. No `prune`, `down -v`, Core restart or NetBird change.
 Fleet/site identity is not invented by this app. A future accepted fleet render
 uses the existing stable site_id and approved overlay target/reference map; do
 not relabel synthetic fixtures as a real monitoring release.
+
+## Optional host metrics (0.3.0)
+
+`host_bindings` defaults to `{}`. Existing options that omit it remain compatible.
+The nested schema follows the [official app options/schema syntax](https://developers.home-assistant.io/docs/apps/configuration/#options--schema).
+Its only fields are `source_profile`, `cpu_utilization`, `memory_available`,
+`memory_used`, `temperature`, and `boot_timestamp`; each sensor is optional.
+The accepted profiles are `core-2026.9.3-haos-systemmonitor` and
+`core-2026.10.1-haos-systemmonitor`, supported by matching official source comparisons. Selecting a
+profile asserts a separately qualified official HAOS System Monitor source;
+entity names and units alone do not qualify it. Unknown keys, wrong profiles,
+non-sensor entities and duplicate bindings fail closed at startup.
+
+Host entity bindings require `heartbeat_enabled: true` and the already approved
+private heartbeat profile/handoff. Bootstrap reuses its numeric Supervisor
+StateAPI and injected Supervisor token. No extra credential, dial-address option,
+permission or file is introduced. Host-only startup without that approved route
+fails closed. Existing heartbeat checks and required producers are unchanged.
+Preserve the installed private heartbeat inputs, metrics token and selected
+NetBird listen address; the empty source default is not an instruction to replace
+an enabled pilot's options.
+
+Leave bindings empty until the exact Core/System Monitor source, HAOS scope,
+integration/entity ownership, permissions and source freshness are qualified.
+Dynamic readings require fresh `last_reported`; a REST read cannot renew stale
+source evidence. Temperature is optional. CPU/RAM/boot sensors are not enabled
+or discovered by this app. No host value is guessed or replaced with zero.
+
+The published 0.3.0 release retains cumulative `metrics_only`, `heartbeat_enabled`
+and `host_metrics_enabled` coverage in the original authenticated build artifact,
+bound to its source and both exact image configs. The host probe used the installed
+application composition, scheduler and authenticated export handler with synthetic
+Core/System Monitor inputs and blocked sockets. It covered CPU, RAM, temperature,
+boot/uptime, disk metrics, unit conversions and stale/absent omission. This image
+evidence does not activate host entities or prove their real freshness; the
+scoped native rollout and host source acceptance remain pending.
