@@ -1,6 +1,6 @@
 {
   "name": "Velnio SFTP",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "slug": "velnio_sftp",
   "description": "Installs and updates the Velnio SFTP integration for native Home Assistant backups.",
   "arch": [
