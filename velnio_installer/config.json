@@ -1,0 +1,44 @@
+{
+  "arch": [
+    "amd64",
+    "aarch64"
+  ],
+  "boot": "manual_only",
+  "description": "Experimental Velnio 0.2.2 installer; physical qualification remains open.",
+  "docker_api": false,
+  "full_access": false,
+  "hassio_api": true,
+  "hassio_role": "homeassistant",
+  "homeassistant": "2026.9.1",
+  "homeassistant_api": true,
+  "host_network": false,
+  "image": "ghcr.io/velnio/velnio-installer",
+  "init": true,
+  "map": [
+    {
+      "path": "/config",
+      "read_only": false,
+      "type": "homeassistant_config"
+    }
+  ],
+  "name": "Velnio Installer",
+  "options": {
+    "backup_count": 5,
+    "health_timeout": 180,
+    "product": "velnio",
+    "retry_failed_release": false,
+    "rollback_to": ""
+  },
+  "privileged": [],
+  "schema": {
+    "backup_count": "int(1,100)",
+    "health_timeout": "int(1,3600)",
+    "product": "list(r4sls08|velnio)",
+    "retry_failed_release": "bool",
+    "rollback_to": "str"
+  },
+  "slug": "velnio_installer",
+  "stage": "experimental",
+  "startup": "application",
+  "version": "1.0.15"
+}
