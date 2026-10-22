@@ -4,7 +4,7 @@
     "aarch64"
   ],
   "boot": "manual_only",
-  "description": "Velnio 0.4.0: full settings and addressed P8 firmware 0.3.0 support.",
+  "description": "Velnio 0.4.1: full settings and P8 firmware 0.3.0/0.4.0 support.",
   "docker_api": false,
   "full_access": false,
   "hassio_api": true,
@@ -40,5 +40,5 @@
   "slug": "velnio_installer",
   "stage": "experimental",
   "startup": "application",
-  "version": "1.0.17"
+  "version": "1.0.18"
 }

@@ -1,18 +1,19 @@
-# Velnio Installer App 1.0.17 / full integration 0.4.0
+# Velnio Installer App 1.0.18 / full integration 0.4.1
 
 This updates the full `velnio` integration. It preserves its Settings menu,
 branch inventory, quick bindings, LED feedback, profile controls, settings
-transfer and diagnostics. It adds addressed event transport for P8 firmware
-0.3.0. It is separate from `velnio_smart_button`, the experimental prototype.
+transfer and diagnostics. It supports addressed event transport for P8 firmware
+0.3.0 and bootloader-enabled application firmware 0.4.0. The bootloader
+updater is outside this App release. It is separate from `velnio_smart_button`, the experimental prototype.
 
 ## Update
 
 Use the existing Velnio Installer from
 https://github.com/Velnio/r4sls08-apps in the Home Assistant App Store.
-Refresh the store, update to **1.0.17**, then start the App with product
+Refresh the store, update to **1.0.18**, then start the App with product
 `velnio`. Updating the App image alone does not install integration code;
 starting it performs the transaction and may restart Home Assistant Core.
-Wait for `READY: installed`, then verify integration **0.4.0** and its Settings.
+Wait for `READY: installed`, then verify integration **0.4.1** and its Settings.
 A subsequent unchanged start should report `READY: unchanged` without restart.
 Stop the installer when finished.
 
@@ -63,4 +64,4 @@ Mijoo s.r.o. licenses the identified first-party Velnio/installer and included R
 
 The operational release owner is **Mijoo s.r.o.** Report problems and escalate experimental-release issues through [GitHub Issues](https://github.com/Velnio/r4sls08-apps/issues). The first evaluation is scheduled for 14 calendar days after actual public publication; the final release receipt supplies the publication time and corresponding evaluation date. No response-time SLA, staffed support hours or guaranteed hardware support is promised. Include App/integration versions, architecture, expected and observed behavior, and sanitized diagnostics. Remove credentials, personal information and private network details before posting a public issue.
 
-Matching experimental release: https://github.com/Velnio/r4sls08-apps/releases/tag/velnio-0.4.0-app-1.0.17-experimental.1
+Matching experimental release: https://github.com/Velnio/r4sls08-apps/releases/tag/velnio-0.4.1-app-1.0.18-experimental.1
