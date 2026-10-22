@@ -1,3 +1,12 @@
+# App 1.0.17 / Velnio 0.4.0
+
+- Adds addressed P8 firmware 0.3.0 event transport to the full Velnio integration.
+- Preserves Settings, branch management, bindings, LED feedback and diagnostics.
+- Uses the existing Velnio Installer slug so HA can offer a normal App update.
+- Keeps the R4 payload, installer runtime and pruned base recipe unchanged.
+- Includes matching ARM64/AMD64 source materials and license notices.
+- Firmware flashing and qualification of 50 physical modules are outside this update.
+
 # App 1.0.15 / Velnio 0.2.2 — experimental
 
 - Separate Velnio Installer identity with default Velnio product and manual start.
