@@ -1,3 +1,9 @@
+# App 1.0.18 / Velnio 0.4.1
+
+- Supports the exact P8 firmware 0.4.0 application profile with its existing addressed event, LED, gesture profile and health maps.
+- Preserves support for firmware 0.3.0 and 0.2.0, full Settings, identities and session authority.
+- Unknown firmware/map/variant combinations remain unsupported. Firmware flashing and the bootloader updater are outside this App release.
+
 # App 1.0.17 / Velnio 0.4.0
 
 - Adds addressed P8 firmware 0.3.0 event transport to the full Velnio integration.
