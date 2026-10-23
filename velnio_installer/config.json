@@ -4,7 +4,7 @@
     "aarch64"
   ],
   "boot": "manual_only",
-  "description": "Velnio 0.7.3: P8 buttons, LED feedback, recovery and local logos.",
+  "description": "Install Velnio from a private repository using your own GitHub PAT.",
   "docker_api": false,
   "full_access": false,
   "hassio_api": true,
@@ -12,7 +12,6 @@
   "homeassistant": "2026.9.1",
   "homeassistant_api": true,
   "host_network": false,
-  "image": "ghcr.io/velnio/velnio-installer",
   "init": true,
   "map": [
     {
@@ -27,18 +26,23 @@
     "health_timeout": 180,
     "product": "velnio",
     "retry_failed_release": false,
-    "rollback_to": ""
+    "rollback_to": "",
+    "github_token": ""
   },
   "privileged": [],
   "schema": {
     "backup_count": "int(1,100)",
     "health_timeout": "int(1,3600)",
-    "product": "list(r4sls08|velnio)",
+    "product": "list(velnio)",
     "retry_failed_release": "bool",
-    "rollback_to": "str"
+    "rollback_to": "str",
+    "github_token": "password"
   },
   "slug": "velnio_installer",
   "stage": "stable",
   "startup": "application",
-  "version": "1.0.19"
+  "version": "1.0.20",
+  "breaking_versions": [
+    "1.0.20"
+  ]
 }
