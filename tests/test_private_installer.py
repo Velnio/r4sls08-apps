@@ -17,8 +17,15 @@ LEGACY = "github_pat_fixture_must_not_be_used"
 class RegistryInstallerTests(unittest.TestCase):
     def test_registry_auth_stays_outside_app(self):
         config = json.loads((ROOT / "velnio_installer/config.json").read_text())
+        release = json.loads((ROOT / "velnio_installer/image-digests.json").read_text())
         self.assertEqual(config["image"], "ghcr.io/velnio/velnio-installer")
-        self.assertEqual(config["version"], "1.0.22")
+        self.assertEqual(config["version"], release["installer_version"])
+        self.assertRegex(config["version"], r"^\d+\.\d+\.\d+$")
+        self.assertEqual(release["image"], config["image"])
+        self.assertEqual(release["visibility"], "private")
+        self.assertEqual(set(release["platforms"]), {"amd64", "arm64"})
+        for digest in [release["index_digest"], *release["platforms"].values()]:
+            self.assertRegex(digest, r"^sha256:[a-f0-9]{64}$")
         self.assertNotIn("github_token", config["options"])
         self.assertNotIn("github_token", config["schema"])
         self.assertFalse(config["docker_api"])
