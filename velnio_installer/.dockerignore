@@ -1,5 +1,6 @@
 **
 !Dockerfile
+!prune_runtime.py
 !runtime/
 runtime/**
 !runtime/__init__.py
@@ -7,7 +8,11 @@ runtime/**
 !runtime/catalog.py
 !runtime/installer.py
 !runtime/supervisor.py
-!runtime/private_release.py
-!private-release.json
+!payload/
+!payload/velnio/
+!payload/velnio/**
+!release-velnio.json
+!legal/
+!legal/**
 !LICENSE
 !NOTICE

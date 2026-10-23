@@ -4,7 +4,7 @@
     "aarch64"
   ],
   "boot": "manual_only",
-  "description": "Install Velnio from a private repository using your own GitHub PAT.",
+  "description": "Install Velnio from a private image using Home Assistant Registry credentials.",
   "docker_api": false,
   "full_access": false,
   "hassio_api": true,
@@ -26,8 +26,7 @@
     "health_timeout": 180,
     "product": "velnio",
     "retry_failed_release": false,
-    "rollback_to": "",
-    "github_token": ""
+    "rollback_to": ""
   },
   "privileged": [],
   "schema": {
@@ -35,14 +34,15 @@
     "health_timeout": "int(1,3600)",
     "product": "list(velnio)",
     "retry_failed_release": "bool",
-    "rollback_to": "str",
-    "github_token": "password"
+    "rollback_to": "str"
   },
   "slug": "velnio_installer",
   "stage": "stable",
   "startup": "application",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "breaking_versions": [
-    "1.0.20"
-  ]
+    "1.0.20",
+    "1.0.21"
+  ],
+  "image": "ghcr.io/velnio/velnio-installer"
 }
