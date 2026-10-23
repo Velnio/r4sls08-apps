@@ -1,16 +1,16 @@
 # Velnio Installer
 
-Installer **1.0.21** installs integration **0.7.3** bundled in the PRIVATE
+Installer **1.0.22** installs integration **0.7.4** bundled in the PRIVATE
 `ghcr.io/velnio/velnio-installer` image, for ARM64 and AMD64. This public repository
 contains the generic Installer runtime, recipe and App metadata. Native integration
 code and payload archives are not published here.
 
 ## Install or update
 
-1. In Home Assistant, open **Settings → Apps → App Store → ⋮ → Registries** (Registry credentials).
-2. Add or keep the `ghcr.io` entry: your GitHub username and your own PAT **classic** with **read:packages**. Its owner must already have Read access to the private Velnio Installer package. Complete GitHub organization SSO authorization when required.
+1. In Home Assistant, open **Settings → Apps → App Store → ⋮ → Registries** (Registry credentials), or `/config/apps/registries` on your HA instance.
+2. Add or keep the `ghcr.io` entry: your GitHub username and your own PAT **classic** with **read:packages** in the **Password** field. Its owner must already have Read access to the private Velnio Installer package. Complete GitHub organization SSO authorization when required.
 3. Add [Velnio Apps](https://github.com/Velnio/r4sls08-apps) to the App Store and refresh it.
-4. Install or update **Velnio Installer 1.0.21**, then start it. Wait for `VELNIO_INSTALLER_READY: installed` or `unchanged` in its log.
+4. Install or update **Velnio Installer 1.0.22**, then start it. Wait for `VELNIO_INSTALLER_READY: installed` or `unchanged` in its log.
 
 There is **no github_token field** in App Configuration. Do not copy Registry
 credentials into App options. Supervisor authenticates the image pull; the running
@@ -20,7 +20,7 @@ currently requires a classic PAT for GHCR; package access is also limited by the
 account's package permissions. Prefer an account with access only to needed packages.
 Protect Supervisor data and HA backups, which may contain credentials.
 
-Official references: [Home Assistant private registries](https://developers.home-assistant.io/docs/add-ons/configuration/#private-registries),
+Official references: [Home Assistant registry credentials](https://contributors.home-assistant.io/apps/supervisor-api/host/#post-dockerregistries),
 [GitHub Container Registry authentication](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry).
 
 If the pull is denied, check expiry, account package access, organization approval
