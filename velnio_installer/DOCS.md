@@ -1,60 +1,59 @@
 # Velnio Installer
 
-Installer **1.0.20** downloads integration **0.7.3** from the private
-`Velnio/velnio-ha` repository using **your own GitHub personal access token**.
-The public Installer contains the downloader and transactional installation
-runtime. It does not include the integration, a shared token or cached payloads.
+Installer **1.0.21** installs integration **0.7.3** bundled in the PRIVATE
+`ghcr.io/velnio/velnio-installer` image, for ARM64 and AMD64. This public repository
+contains the generic Installer runtime, recipe and App metadata. Native integration
+code and payload archives are not published here.
 
 ## Install or update
 
-1. Add [Velnio Apps](https://github.com/Velnio/r4sls08-apps) to the Home Assistant App Store and refresh the store.
-2. Install or update **Velnio Installer 1.0.20**. Home Assistant builds this version on your device from the public Dockerfile; internet access is required.
-3. In the App's Configuration tab, enter your token in **github_token**, save and start the App.
-4. Wait for `VELNIO_INSTALLER_READY: installed` or `unchanged` in the log.
+1. In Home Assistant, open **Settings → Apps → App Store → ⋮ → Registries** (Registry credentials).
+2. Add or keep the `ghcr.io` entry: your GitHub username and your own PAT **classic** with **read:packages**. Its owner must already have Read access to the private Velnio Installer package. Complete GitHub organization SSO authorization when required.
+3. Add [Velnio Apps](https://github.com/Velnio/r4sls08-apps) to the App Store and refresh it.
+4. Install or update **Velnio Installer 1.0.21**, then start it. Wait for `VELNIO_INSTALLER_READY: installed` or `unchanged` in its log.
 
-The token's owner must already have read access to the private repository. A PAT
-does not grant repository access by itself. Prefer a fine-grained token with
-resource owner **Velnio**, selected repository **velnio-ha**, and **Contents:
-read-only**. Complete any organization approval required by GitHub. A classic
-PAT with private repository read access also works, but has broader permissions.
-You do not need `write:packages`, `delete:packages` or write access to repository contents.
+There is **no github_token field** in App Configuration. Do not copy Registry
+credentials into App options. Supervisor authenticates the image pull; the running
+Installer does not receive the registry PAT. Do not grant `write:packages`,
+`delete:packages` or source repository access just to install this image. GitHub
+currently requires a classic PAT for GHCR; package access is also limited by the
+account's package permissions. Prefer an account with access only to needed packages.
+Protect Supervisor data and HA backups, which may contain credentials.
 
-The token is configured through Home Assistant's masked password option. It is
-read from the Supervisor-managed App options at runtime. It is not a Docker build
-argument, environment variable, command-line argument or part of the public
-repository/image. Protect HA backups, which can contain App options.
+Official references: [Home Assistant private registries](https://developers.home-assistant.io/docs/add-ons/configuration/#private-registries),
+[GitHub Container Registry authentication](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry).
 
-Missing, expired or unauthorized tokens stop installation before changes to the
-integration or a Core restart. Log messages do not include the token or GitHub
-response bodies. Downloads are bounded, checked against pinned SHA-256 digests,
-and verified against the immutable per-file manifest before installation. The
-PAT is sent only to `api.github.com`; asset redirects do not receive it.
+If the pull is denied, check expiry, account package access, organization approval
+and the `ghcr.io` registry entry. The integration is not changed by a failed pull.
+Once pulled, installation, no-op and local recovery use the verified bundled payload
+without contacting GitHub. Published version tags must never be overwritten; each
+release records its index and platform digests.
 
-Starting the App installs under `/config/custom_components/velnio`. It may restart
-Home Assistant Core after a successful configuration check. Starting it again
-with the same installed files is a no-op and does not restart Core. A newer
-installed integration is preserved. A new integration release requires a new
-Installer release with updated pins; it never silently downloads a moving branch.
+Starting the App installs under `/config/custom_components/velnio` and may restart
+Home Assistant Core after a successful configuration check. Starting again with the
+same files does not restart Core. A newer installed integration is preserved.
+The Installer never downloads a moving source branch or flashes P8 firmware.
 
 ## Recovery and existing settings
 
-Verified backups, transaction journals, inventory/session authority, config entry
-IDs, bindings and LED feedback keep their existing locations. The App does not
-flash P8 firmware or create another serial-port owner. Existing installations
-continue operating after old public release assets and images are withdrawn.
+Existing transaction journals, backups, inventory/session authority, config entry
+IDs, entities, bindings and LED feedback remain in their existing locations. The
+App does not create another serial-port owner. `backup_count`, `health_timeout`,
+`retry_failed_release` and `rollback_to` retain their previous meanings. Use a known
+backup ID for explicit rollback. Local rollback, pending transaction recovery and
+acknowledgement of an interrupted rollback use verified local state. A start with
+an unfinished transaction performs recovery only; inspect the log before starting
+again. Do not delete recovery state after an ambiguous Core restart.
 
-`backup_count`, `health_timeout`, `retry_failed_release`, and `rollback_to` retain
-their previous meanings. Use a known backup ID for an explicit rollback. Verified
-local rollback, pending transaction recovery and acknowledgement of an interrupted
-rollback remain available without a working PAT or GitHub connection. A start
-that finds an unfinished transaction performs recovery only; start it again to
-download and install once recovery is complete. Do not delete recovery state after an
-ambiguous Core restart; inspect the App log first.
+Version 1.0.20 used a separate GitHub API token and a local build. Version 1.0.21
+replaces it with a private prebuilt image and Supervisor Registry credentials.
+An obsolete `github_token` value retained by Supervisor is ignored, never used or
+logged; remove that obsolete key from saved options when upgrading. It is absent
+from the new configuration schema. Never remove or alter unrelated options.
 
-Versions 1.0.15, 1.0.17, 1.0.18 and 1.0.19 bundled the integration. Their public
-integration ZIPs/source archives have been withdrawn and their container package
-is private. Version 1.0.20 is a breaking configuration update because a token is
-now required for installation and updates.
+Public integration ZIPs and source archives from older releases remain withdrawn;
+their container images remain private. Authorized recipients of a private image can
+inspect the code it installs. Private distribution controls access to the package.
 
-SFTP, R4 and Health Apps remain independently versioned. Their credentials and
-configuration are separate. Support: [Velnio Apps issues](https://github.com/Velnio/r4sls08-apps/issues).
+R4, Health and SFTP Apps remain independently versioned. Support:
+[Velnio Apps issues](https://github.com/Velnio/r4sls08-apps/issues).

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.21 — Velnio 0.7.3
+
+- Pull a private prebuilt GHCR image using Supervisor Registry credentials.
+- Remove the separate github_token option and GitHub API downloader.
+- Ignore retained legacy token options without forwarding or logging them.
+- Preserve the verified 0.7.3 payload, transaction recovery, rollback and no-op behavior.
+- Keep native source, ZIPs and container payloads private.
+
 ## 1.0.20
 
 - Remove the bundled integration and require the user's own GitHub PAT to download the pinned release from the private Velnio repository.
