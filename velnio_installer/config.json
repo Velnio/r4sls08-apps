@@ -39,7 +39,7 @@
   "slug": "velnio_installer",
   "stage": "stable",
   "startup": "application",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "breaking_versions": [
     "1.0.20",
     "1.0.21"

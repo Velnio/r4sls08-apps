@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.22 — Velnio 0.7.4
+
+- Preserve shared Home Assistant component setup when telemetry startup is cancelled or rolled back, allowing a subsequent entry reload to recover.
+- Include controlled regression coverage for setup cancellation and event acknowledgement ordering.
+- Keep the private GHCR image, Supervisor Registry credentials, transactional backups, rollback and repeated no-op startup.
+
 ## 1.0.21 — Velnio 0.7.3
 
 - Pull a private prebuilt GHCR image using Supervisor Registry credentials.
