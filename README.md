@@ -11,10 +11,12 @@ pilot. Its private image is `ghcr.io/velnio/velnio-health-agent`; see
 [Health Agent documentation](velnio_health/DOCS.md) after its release is published.
 Installer releases preserve Health Agent metadata and do not update its image.
 
-## Velnio — experimental
+## Velnio
 
-Velnio Installer App **1.0.15** installs integration **0.2.2** from a separate public image on ARM64 and AMD64. Add this repository to the Home Assistant App Store and read [installation and recovery instructions](velnio_installer/DOCS.md).
+Velnio Installer **1.0.19** installs native integration **0.7.3** from the official public image for ARM64 and AMD64. Add this repository to the Home Assistant App Store and read the [installation and recovery instructions](velnio_installer/DOCS.md).
 
-This is an experimental evaluation release: physical P8/V10 timing, capacity and soak qualification remain open. Optional temperature and complete health entities remain unfinished. It is not stable 1.0. See [release notes, exact sources and licenses](https://github.com/Velnio/r4sls08-apps/releases/tag/velnio-0.2.2-app-1.0.15-experimental.1).
+This release includes P8 button bindings, LED feedback, readable names, address settings, recovery after reconnects and local Velnio logos. Two P8/V10 boards with firmware 0.4.0 were physically qualified on HA Core 2026.9.4, including complete power loss. Capacity with fifty physical boards and arbitrary firmware/HA versions is outside that qualification. This is a 0.7.3 release and does not claim completion of the historical 1.0 qualification scope.
 
-Support: [GitHub Issues](https://github.com/Velnio/r4sls08-apps/issues), owned by Mijoo s.r.o.; first feedback evaluation 14 calendar days after publication, with no promised response SLA. The existing R4, Health and SFTP catalog entries are independent.
+[Release notes, checksums, selected sources and licenses](https://github.com/Velnio/r4sls08-apps/releases/tag/velnio-0.7.3-app-1.0.19).
+
+Support: [GitHub Issues](https://github.com/Velnio/r4sls08-apps/issues), maintained by Mijoo s.r.o. The existing R4, Health and SFTP entries are independently versioned.
