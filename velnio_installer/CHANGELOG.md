@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.20
+
+- Remove the bundled integration and require the user's own GitHub PAT to download the pinned release from the private Velnio repository.
+- Build the public Installer on the HA device; no public container layers contain the integration.
+- Verify package and manifest checksums before touching the installed integration.
+- Preserve transactional backups, rollback, content no-op behavior and existing P8 settings.
+- Withdraw public integration ZIPs and source archives from earlier releases and make their container images private.
+
 ## 1.0.19 — Velnio 0.7.3
 
 - Include offline Velnio brand icons and wordmarks in both themes and densities.

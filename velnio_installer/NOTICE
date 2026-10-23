@@ -1,0 +1,6 @@
+Velnio Installer
+Copyright Mijoo s.r.o.
+
+The transactional runtime derives from Velnio/R4SLS08 commit
+c46243881d6214be767a87d18610511f02a2edee and Installer 1.0.19.
+Integration payloads are not included in this public installer.

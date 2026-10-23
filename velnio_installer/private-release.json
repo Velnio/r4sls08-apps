@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "repository": "Velnio/velnio-ha",
+  "tag": "velnio-0.7.3",
+  "integration_version": "0.7.3",
+  "assets": {
+    "archive": {
+      "name": "velnio-0.7.3.zip",
+      "sha256": "3b73249667e46d65ee1efd879125f75dd281e8593cad8c4e8953d06e3671371b"
+    },
+    "manifest": {
+      "name": "velnio-0.7.3.installer.json",
+      "sha256": "a7825758f9da1f7cb626ec1bc01f53ba5ef62603b7dce99fa0ecda1de21809b1"
+    }
+  }
+}
