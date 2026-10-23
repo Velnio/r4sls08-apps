@@ -18,7 +18,7 @@ class RegistryInstallerTests(unittest.TestCase):
     def test_registry_auth_stays_outside_app(self):
         config = json.loads((ROOT / "velnio_installer/config.json").read_text())
         self.assertEqual(config["image"], "ghcr.io/velnio/velnio-installer")
-        self.assertEqual(config["version"], "1.0.21")
+        self.assertEqual(config["version"], "1.0.22")
         self.assertNotIn("github_token", config["options"])
         self.assertNotIn("github_token", config["schema"])
         self.assertFalse(config["docker_api"])

@@ -13,9 +13,9 @@ Installer releases preserve Health Agent metadata and do not update its image.
 
 ## Velnio
 
-Velnio Installer **1.0.21** installs native integration **0.7.3** from the private `ghcr.io/velnio/velnio-installer` image. Home Assistant Supervisor uses your existing **Registry credentials** for `ghcr.io`; there is no `github_token` App option. This public catalog contains only generic Installer code, build metadata and documentation. Add this repository to the Home Assistant App Store and read the [installation and recovery instructions](velnio_installer/DOCS.md).
+Velnio Installer **1.0.22** installs native integration **0.7.4** from the private `ghcr.io/velnio/velnio-installer` image. Home Assistant Supervisor uses your existing **Registry credentials** for `ghcr.io`; there is no `github_token` App option. This public catalog contains only generic Installer code, build metadata and documentation. Add this repository to the Home Assistant App Store and read the [installation and recovery instructions](velnio_installer/DOCS.md).
 
-This release includes P8 button bindings, LED feedback, readable names, address settings, recovery after reconnects and local Velnio logos. Two P8/V10 boards with firmware 0.4.0 were physically qualified on HA Core 2026.9.4, including complete power loss. Capacity with fifty physical boards and arbitrary firmware/HA versions is outside that qualification. This is a 0.7.3 release and does not claim completion of the historical 1.0 qualification scope.
+Velnio 0.7.4 fixes telemetry reload after interrupted startup and preserves P8 button bindings, LED feedback, readable names, address settings, reconnect recovery and local logos. The preceding 0.7.3 release was physically qualified with two P8/V10 boards running firmware 0.4.0 on HA Core 2026.9.4, including complete power loss. Capacity with fifty physical boards and arbitrary firmware/HA versions is outside that qualification. The 0.7.x line does not claim completion of the historical 1.0 qualification scope.
 
 Earlier public integration ZIPs/source archives have been withdrawn and the bundled container images made private. Public releases contain Installer metadata and documentation; integration releases and container payloads remain private.
 
