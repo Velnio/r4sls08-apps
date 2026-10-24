@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.23 — Velnio 0.7.4
+
+- Deliver the qualified ARM64/AMD64 integration from the private GHCR image.
+- Keep Supervisor Registry credentials and transactional install/rollback.
+
 ## 1.0.22 — Velnio 0.7.4
 
 - Preserve shared Home Assistant component setup when telemetry startup is cancelled or rolled back, allowing a subsequent entry reload to recover.
