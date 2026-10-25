@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.1.3 — 2026-10-25
+
+- Bundle integration 0.1.3: reject short or oversized backup streams before
+  archive publication. Carry interrupted upload/delete recovery while refusing
+  foreign archives and conflicting metadata.
+- Include eight PNG brand assets in the closed nineteen-file payload. Qualify
+  updates from reconstructed legacy eleven-file managed receipts on both image
+  architectures, preserving old bytes and protected state with one restart and
+  an unchanged CURRENT no-op.
+- Publish the private image after exact linux/amd64 and linux/arm64 smoke.
+  Release run `40240525760` matches published configs to those tested images;
+  immutable index:
+  `sha256:b13bb590cb7d74ebc05e325b44a2a133b42723095e331e0fe7aa6153b60a6265`.
+- Catalog metadata performs no Home Assistant deployment. New native key,
+  rotation and exact Recorder recovery acceptance remain separate; earlier
+  native app 0.1.2/integration 0.1.1 evidence remains historical.
+
 ## 0.1.2 — 2026-10-18
 
 - Store retained transaction payloads outside `custom_components` so Core cannot
