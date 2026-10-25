@@ -7,29 +7,36 @@ transfer backups itself and does not need to keep running.
 
 ## Availability
 
-App **0.1.2** bundles integration **0.1.1**. It corrects installer transaction
-storage; the integration payload and its pinned checksum are unchanged.
-The private image is `ghcr.io/velnio/velnio-sftp-app:0.1.2`; its immutable
-multiarch digest is `sha256:f702bb254fe3bacb21fe4e14fc16f3b479901008c7cd2d0f966a2a766cb182fd`.
-Release run `39152186344` qualifies private package visibility and matches the
-published linux/amd64 and linux/arm64 configs to the exact images that passed
-network-isolated smoke checks. The release source is
-`3329df5e35178e37ff9bbd2d891faa184a976bcb`, tagged `sftp-app-v0.1.2`.
-Catalog publication does not deploy the app to Home Assistant. A live 0.1.2
-upgrade and restore still require separate qualification.
+App **0.1.3** bundles integration **0.1.3**. The private image is
+`ghcr.io/velnio/velnio-sftp-app:0.1.3`; its immutable multiarch digest is
+`sha256:b13bb590cb7d74ebc05e325b44a2a133b42723095e331e0fe7aa6153b60a6265`.
+[Release run 40240525760](https://github.com/Velnio/velnio-backup/actions/runs/40240525760)
+verifies private package visibility and matches the published linux/amd64 and
+linux/arm64 configs to the exact images that passed network-isolated smoke.
+Those checks exercise actual Linux atomic install/update, a reconstructed
+synthetic eleven-file managed receipt updating to the nineteen-file branded
+payload, retained bytes, protected state, one restart, CURRENT no-op and refusal
+to replay an ambiguous restart. The release source is
+`c1e2c7f5f43c57737e3e3e727f57b59de5059e55`, tagged `sftp-app-v0.1.3`.
 
 The integration profile pins source
-`559651cd515b3a4cd01a036c42fd20ec121cc52b` and ZIP SHA-256
-`ca9aefca2e1edfd92865658aea8bc4d7d9d750c4afbb853bbc67903eb7c499e5`.
+`feb18e79fa50568349e59e113fd466a5213d84fd` and ZIP SHA-256
+`a341b09d7f391358232048da5939b58ecaed25056c381d6aa8f4302b5419bdd6`.
+Its closed payload contains eleven integration files and eight PNG brand assets.
+
+Catalog publication does not deploy to Home Assistant. Earlier native
+installation/recovery evidence applies to app 0.1.2/integration 0.1.1. Native
+acceptance of 0.1.3 and the new key, rotation and exact Recorder recovery proofs
+remain separate; the isolated image checks do not establish them.
 
 The catalog is [Velnio/r4sls08-apps](https://github.com/Velnio/r4sls08-apps).
 Installation requires Supervisor's registry account to have
 read/pull access to the private image. No GitHub token is needed in app options
 or in the running app. Never put credentials in this repository or in logs.
 
-The integration and app have separate versions. App 0.1.2 bundles integration
-0.1.1. The delivery profile accepts only Core **2026.9.3** and **2026.10.1**;
-other Core builds are refused. The existing native integration pilot was
+The integration and app have separate versions. App 0.1.3 bundles integration
+0.1.3. The delivery profile accepts only Core **2026.9.3** and **2026.10.1**;
+other Core builds are refused. The earlier native integration pilot was
 verified on Core 2026.9.3. Integration compatibility with Core 2026.10.1 does not
 qualify a NAS worker to process that version's backup archives.
 
@@ -64,10 +71,10 @@ A restart briefly interrupts Core automations and API availability. Choose a
 suitable maintenance window. After reading the result, restore
 `restart_core: false` and `operation: status` before another manual start.
 
-An exact, unmodified manually installed integration matching the bundled 0.1.1
-can be recognized and adopted. A managed 0.1.0 installation with an unchanged
-receipt can use `update`; a manually installed 0.1.0 without that receipt is
-refused as an unknown installation and needs explicit operator reconciliation.
+An exact, unmodified manually installed integration matching the bundled 0.1.3
+can be recognized and adopted. A recognized older managed installation with an
+unchanged receipt can use `update`; a manually installed older version without
+that receipt is refused as unknown and needs explicit operator reconciliation.
 Unknown, edited or newer installations are refused. There is no automatic
 downgrade, automatic retry or rollback option.
 
@@ -103,6 +110,20 @@ payload and transaction evidence outside Core discovery, and separately
 authorize any corrective restart. Verify the active files against the pinned
 payload, exactly one original entry loaded, and its native backup agent healthy
 before explicit reconciliation. Moving files alone does not prove Core recovery.
+
+## Integration 0.1.3 transfer recovery
+
+Uploads must contain exactly the advertised number of bytes. A short or oversized
+stream fails before publishing its archive and metadata. If publication is
+interrupted after the archive rename, an exact retry may finish publishing its
+retained matching metadata only when the corresponding unique archive staging
+path is absent. Foreign archives and conflicting metadata are refused.
+
+A delete retry can finish removing matching metadata when the archive was
+already removed by the interrupted delete. These transfer guarantees do not
+establish successful restore, recovery-key custody or external identity fencing.
+The separate offline dependency kit is pinned to Core 2026.9.3 ARM64; it does
+not qualify offline recovery on Core 2026.10.1.
 
 ## Scope and permissions
 
