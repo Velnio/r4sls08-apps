@@ -1,0 +1,47 @@
+name: Qualify Coolify runner
+
+on:
+  pull_request:
+    paths: ['.github/workflows/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: runner-qualification-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docker:
+    name: Isolated Docker and ARM64
+    runs-on: [self-hosted, coolify]
+    timeout-minutes: 10
+    steps:
+      - name: Confirm Docker client and private daemon
+        run: docker version
+      - uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
+        with:
+          platforms: arm64
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - name: Build and run disposable amd64 and arm64 images without publication
+        run: |
+          set -euo pipefail
+          context=$(mktemp -d "$RUNNER_TEMP/runner-qualification.XXXXXX")
+          trap 'rm -rf "$context"' EXIT
+          cat > "$context/Dockerfile" <<'DOCKERFILE'
+          FROM busybox:1.37.0
+          RUN printf 'runner-qualification\n' > /qualification
+          DOCKERFILE
+          for arch in amd64 arm64; do
+            image="velnio-runner-qualification:$arch"
+            docker buildx build --platform "linux/$arch" --network none \
+              --load --provenance=false --sbom=false --tag "$image" "$context"
+            actual=$(docker run --rm --platform "linux/$arch" --network none \
+              --cap-drop ALL --security-opt no-new-privileges:true "$image" \
+              sh -ec 'test "$(cat /qualification)" = runner-qualification; uname -m')
+            case "$arch" in
+              amd64) test "$actual" = x86_64 ;;
+              arm64) test "$actual" = aarch64 ;;
+            esac
+          done
