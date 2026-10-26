@@ -9,7 +9,7 @@ ENV PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:
     PYTHON_VERSION=3.14.6 \
     PYTHON_SHA256=143b1dddefaec3bd2e21e3b839b34a2b7fb9842272883c576420d605e9f30c63
 
-ARG BUILD_VERSION=1.0.24
+ARG BUILD_VERSION=1.0.25
 ARG BUILD_ARCH
 WORKDIR /opt/r4sls08
 COPY runtime/ runtime/
