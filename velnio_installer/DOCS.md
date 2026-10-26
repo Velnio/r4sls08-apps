@@ -1,6 +1,6 @@
 # Velnio Installer
 
-Installer **1.0.26** installs integration **0.8.0** bundled in the PRIVATE
+Installer **1.0.27** installs integration **0.8.1** bundled in the PRIVATE
 `ghcr.io/velnio/velnio-installer` image, for ARM64 and AMD64. This public repository
 contains the generic Installer runtime, recipe and App metadata. Native integration
 code and payload archives are not published here.
@@ -10,7 +10,7 @@ code and payload archives are not published here.
 1. In Home Assistant, open **Settings → Apps → App Store → ⋮ → Registries** (Registry credentials), or `/config/apps/registries` on your HA instance.
 2. Add or keep the `ghcr.io` entry: your GitHub username and your own PAT **classic** with **read:packages** in the **Password** field. Its owner must already have Read access to the private Velnio Installer package. Complete GitHub organization SSO authorization when required.
 3. Add [Velnio Apps](https://github.com/Velnio/r4sls08-apps) to the App Store and refresh it.
-4. Install or update **Velnio Installer 1.0.26**, then start it. Wait for `VELNIO_INSTALLER_READY: installed` or `unchanged` in its log.
+4. Install or update **Velnio Installer 1.0.27**, then start it. Wait for `VELNIO_INSTALLER_READY: installed` or `unchanged` in its log.
 
 There is **no github_token field** in App Configuration. Do not copy Registry
 credentials into App options. Supervisor authenticates the image pull; the running
