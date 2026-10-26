@@ -13,7 +13,7 @@ Installer releases preserve Health Agent metadata and do not update its image.
 
 ## Velnio
 
-Velnio Installer **1.0.25** installs native integration **0.7.6** from the private `ghcr.io/velnio/velnio-installer` image. Home Assistant Supervisor uses your existing **Registry credentials** for `ghcr.io`; there is no `github_token` App option. This public catalog contains only generic Installer code, build metadata and documentation. Add this repository to the Home Assistant App Store and read the [installation and recovery instructions](velnio_installer/DOCS.md).
+Velnio Installer **1.0.26** installs native integration **0.8.0** from the private `ghcr.io/velnio/velnio-installer` image. Home Assistant Supervisor uses your existing **Registry credentials** for `ghcr.io`; there is no `github_token` App option. This public catalog contains only generic Installer code, build metadata and documentation. Add this repository to the Home Assistant App Store and read the [installation and recovery instructions](velnio_installer/DOCS.md).
 
 Velnio 0.7.4 fixes telemetry reload after interrupted startup and preserves P8 button bindings, LED feedback, readable names, address settings, reconnect recovery and local logos. The preceding 0.7.3 release was physically qualified with two P8/V10 boards running firmware 0.4.0 on HA Core 2026.9.4, including complete power loss. Capacity with fifty physical boards and arbitrary firmware/HA versions is outside that qualification. The 0.7.x line does not claim completion of the historical 1.0 qualification scope.
 
