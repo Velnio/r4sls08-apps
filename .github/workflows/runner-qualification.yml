@@ -1,3 +1,4 @@
+# Temporary probe: an internal member PR must start without fork approval.
 name: Qualify Coolify runner
 
 on:
