@@ -15,9 +15,9 @@ These are application-enforced restrictions: HA's Core permission is broader
 than these read routes. There is no claim of a server-enforced read-only Core
 token. Default Supervisor role allows info routes; manager/admin is unnecessary.
 
-The pilot profile is Supervisor2026.09.3. Other versions fail the Supervisor
-collector as unsupported; requalification is needed before treating host fields
-as qualified on another version. Core2026.9.3's upstream status handler returns
+The Supervisor collector accepts exactly Supervisor 2026.09.3 and Supervisor 2026.10.5.
+Other versions fail as unsupported; requalification is needed before treating
+host fields as qualified on another version. Core2026.9.3's upstream status handler returns
 the same strict `{"message":"API running."}` contract used by our Core collector.
 See [Core source](https://github.com/home-assistant/core/blob/2026.9.3/homeassistant/components/api/__init__.py)
 and [Supervisor role source](https://github.com/home-assistant/supervisor/blob/2026.09.3/supervisor/api/middleware/security.py).
@@ -26,12 +26,12 @@ and [Supervisor role source](https://github.com/home-assistant/supervisor/blob/2
 
 The public HA app catalog is [Velnio/r4sls08-apps](https://github.com/Velnio/r4sls08-apps).
 Add that repository in HA's App Store and select **Velnio Health Agent**.
-The image `ghcr.io/velnio/velnio-health-agent:0.3.2` remains private; Supervisor's
+The image `ghcr.io/velnio/velnio-health-agent` remains private; Supervisor's
 existing GHCR registry account must have read access to this package. No token
 belongs in the catalog, app options, URL, Git or issue tracker. If access fails,
 stop and resolve that specific registry permission before installing.
 
-The release source version is `0.3.2`. Private source releases use immutable
+The release source version is `0.3.3`. Private source releases use immutable
 `health-vX.Y.Z` tags in `Velnio/velnio-backup`; publish catalog metadata only after
 authenticated original image qualification.
 The pinned CI workflow builds a wheel/context once, tests amd64 and arm64 images
