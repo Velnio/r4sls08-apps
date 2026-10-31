@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.3 — Supervisor 2026.10.5 collector
+
+- Admit the verified Supervisor 2026.10.5 health contract; unknown versions
+  remain unsupported and unhealthy or unsupported instances remain fail-closed.
+- Preserve existing host profiles, authentication, and listener behavior.
+
 ## 0.3.2 — producer report freshness
 
 - Read live System Monitor producer timestamps through a fixed read-only template,
