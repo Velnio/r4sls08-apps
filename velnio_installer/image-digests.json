@@ -1,11 +1,11 @@
 {
-  "installer_version": "1.0.28",
-  "integration_version": "0.8.2",
+  "installer_version": "1.0.29",
+  "integration_version": "0.8.3",
   "image": "ghcr.io/velnio/velnio-installer",
   "visibility": "private",
-  "index_digest": "sha256:11f6f52310061d2fd84e0a40ebb6bd6320f2a88cb1f68827e6ccc5092eefccf4",
+  "index_digest": "sha256:e2b0cf2569f00c82438f0e0bb339bd85781a2b555aedbfe3f13cb7d83d195ba4",
   "platforms": {
-    "amd64": "sha256:a1ab2327384b99edb61b400fb525fb9b58f67bb726eb8db33c753f4fe93f085c",
-    "arm64": "sha256:15f3f31bcbebe5ebe01bd38134cb9c4dc1b5459bbfa437066d9441484696533f"
+    "amd64": "sha256:d3581903bf7e34fca47600ab68a86474fecae827d909624f907ed82d09f4b178",
+    "arm64": "sha256:1fb0c1541f27432c7d94307da16680defb4808aa53a7bf2c1c0bf1df4064b310"
   }
 }

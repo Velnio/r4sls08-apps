@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.29 — Velnio 0.8.3
+
+- Deliver the qualified ARM64/AMD64 integration from the private GHCR image.
+- Keep Supervisor Registry credentials and transactional install/rollback.
+
 ## 1.0.28 — Velnio 0.8.2
 
 - Deliver the qualified ARM64/AMD64 integration from the private GHCR image.
