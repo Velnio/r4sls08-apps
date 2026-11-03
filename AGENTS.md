@@ -16,3 +16,5 @@ immutable image tag. Verify package visibility and anonymous denial before and a
 
 Before GitHub writes verify Un0kNow, target repository and Git authentication.
 Preserve independently versioned R4, Health and SFTP entries.
+
+Cross-repository ownership and architecture: [Velnio repository map](https://github.com/Velnio/velnio_pcb/blob/main/docs/repository-map.md) and [architecture overview](https://github.com/Velnio/velnio_pcb/blob/main/docs/architecture.md). Check current sources before relying on historical status.
