@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.6 — independent monitoring credential (candidate)
+
+- Accept a separately provisioned optional metrics credential while preserving
+  the existing credential. Unsafe secondary custody fails closed.
+- Preserve the existing listener and heartbeat defaults; no live qualification
+  or published image is implied by this source change.
+
 ## 0.3.3 — Supervisor 2026.10.5 collector
 
 - Admit the verified Supervisor 2026.10.5 health contract; unknown versions

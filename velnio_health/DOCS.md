@@ -31,7 +31,7 @@ existing GHCR registry account must have read access to this package. No token
 belongs in the catalog, app options, URL, Git or issue tracker. If access fails,
 stop and resolve that specific registry permission before installing.
 
-The release source version is `0.3.3`. Private source releases use immutable
+The release source version is `0.3.6`. Private source releases use immutable
 `health-vX.Y.Z` tags in `Velnio/velnio-backup`; publish catalog metadata only after
 authenticated original image qualification.
 The pinned CI workflow builds a wheel/context once, tests amd64 and arm64 images
@@ -67,6 +67,13 @@ owners, hardlinks or symlinks fail closed; no recursive chmod/chown repair occur
 The service cannot run as root. `/data/agent/metrics.token` is stable0600 state,
 generated once and never logged. It has to be securely delivered to the approved
 Prometheus credential file later; no token belongs in Git, tracker or browser URL.
+An optional independently provisioned `/data/agent/monitoring.token` allows a
+second metrics consumer while preserving the original token. It must be owned by
+UID 65532, mode 0600, a single regular file without symlinks, and contain a
+distinct 32–128 character URL-safe credential. An absent file leaves the
+original behavior unchanged; an unsafe file fails startup. Provision the new
+credential securely before the separately authorized app restart and never
+replace the original token as part of enrollment.
 
 GET `/live` and `/ready` report agent-loop progress/readiness, not house health.
 GET `/metrics` requires exactly one matching Bearer header; unknown paths and
