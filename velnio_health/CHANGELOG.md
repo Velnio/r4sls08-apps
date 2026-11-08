@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.7 — startup diagnostics (unpublished candidate)
+
+- Report fixed startup/service phase and reason codes without exception payloads,
+  credentials, paths or configuration in the caught failure message.
+- Preserve exit behavior, transport cleanup, both metrics credentials and
+  privilege checks; add no retry or startup dependency.
+- A diagnostic code does not prove the cause of a previous exit or current
+  service health. Publication and live qualification remain separate steps.
+
 ## 0.3.6 — independent monitoring credential (candidate)
 
 - Accept a separately provisioned optional metrics credential while preserving

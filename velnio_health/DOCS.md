@@ -31,7 +31,7 @@ existing GHCR registry account must have read access to this package. No token
 belongs in the catalog, app options, URL, Git or issue tracker. If access fails,
 stop and resolve that specific registry permission before installing.
 
-The release source version is `0.3.6`. Private source releases use immutable
+The release source version is `0.3.7`. Private source releases use immutable
 `health-vX.Y.Z` tags in `Velnio/velnio-backup`; publish catalog metadata only after
 authenticated original image qualification.
 The pinned CI workflow builds a wheel/context once, tests amd64 and arm64 images
