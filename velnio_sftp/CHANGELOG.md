@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.4 — 2026-11-08
+
+- Publish catalog metadata for the qualified private app 0.1.4 image, bundling
+  integration 0.1.3 from source `127d3c664b4a54bcb2918c3004603e7ecde3b0ec`.
+- Allow an already-bound integration to load while its SFTP receiver is
+  unavailable, with local protected-key and trust validation. Enrollment and
+  transfer host verification remain enforced.
+- Record immutable index, platform and config digests in `image-digests.json`.
+  Both architectures passed isolated smoke. The original release workflow
+  failed its final identity verifier; the corrected verifier subsequently
+  qualified the existing images locally without rebuilding or retagging.
+- Preserve manual start, status-only defaults and existing permissions.
+  Catalog publication does not update Home Assistant or prove backup delivery.
+
 ## 0.1.3 — 2026-10-25
 
 - Bundle integration 0.1.3: reject short or oversized backup streams before
