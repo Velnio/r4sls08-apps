@@ -7,34 +7,47 @@ transfer backups itself and does not need to keep running.
 
 ## Availability
 
-App **0.1.3** bundles integration **0.1.3**. The private image is
-`ghcr.io/velnio/velnio-sftp-app:0.1.3`; its immutable multiarch digest is
-`sha256:b13bb590cb7d74ebc05e325b44a2a133b42723095e331e0fe7aa6153b60a6265`.
-[Release run 40240525760](https://github.com/Velnio/velnio-backup/actions/runs/40240525760)
-verifies private package visibility and matches the published linux/amd64 and
-linux/arm64 configs to the exact images that passed network-isolated smoke.
-Those checks exercise actual Linux atomic install/update, a reconstructed
-synthetic eleven-file managed receipt updating to the nineteen-file branded
-payload, retained bytes, protected state, one restart, CURRENT no-op and refusal
-to replay an ambiguous restart. The release source is
-`c1e2c7f5f43c57737e3e3e727f57b59de5059e55`, tagged `sftp-app-v0.1.3`.
+App **0.1.4** bundles integration **0.1.3**. The private image is
+`ghcr.io/velnio/velnio-sftp-app:0.1.4`; its immutable multiarch digest is
+`sha256:3cb27c3be7a79a0d239f369b2c5d16d217c544d0c8cfe0c5ba936daf4ea4c743`.
+The release source is `f3cc33018a1564d8f24c5a9333e25e882a2e03d3`,
+tagged `sftp-app-v0.1.4`. [image-digests.json](image-digests.json) records the
+qualified platform manifests, config digests and verifier provenance.
+
+Both linux/amd64 and linux/arm64 images passed network-isolated installation
+and update smoke checks in
+[release run 42519229985](https://github.com/Velnio/velnio-backup/actions/runs/42519229985).
+The original workflow nevertheless ended in **failure**: its final verifier
+mistook a manifest image ID for a config digest, and the final release artifact
+was not uploaded. The corrected verifier from commit
+`9c76419be0ef7c9554f8b75b08829e2ebb85fdc2` subsequently qualified these
+existing digests in a local read-only run. That verification matched the
+published manifests and configs to the exact smoke-tested images and checked
+private package visibility. It did not rerun the release workflow, rebuild an
+image or overwrite the tag.
 
 The integration profile pins source
-`feb18e79fa50568349e59e113fd466a5213d84fd` and ZIP SHA-256
-`a341b09d7f391358232048da5939b58ecaed25056c381d6aa8f4302b5419bdd6`.
-Its closed payload contains eleven integration files and eight PNG brand assets.
+`127d3c664b4a54bcb2918c3004603e7ecde3b0ec` and ZIP SHA-256
+`56cce5a70067d961f888cbfc2e8c50fce23ef0ac032ed4acbdabccae8db20c08`.
+Its closed payload contains thirteen integration, JSON and translation files
+and eight PNG brand assets. The payload itself remains private.
 
-Catalog publication does not deploy to Home Assistant. Earlier native
-installation/recovery evidence applies to app 0.1.2/integration 0.1.1. Native
-acceptance of 0.1.3 and the new key, rotation and exact Recorder recovery proofs
-remain separate; the isolated image checks do not establish them.
+This payload allows an already-bound integration to load when its receiver is
+temporarily unavailable, after validating its local protected key and trust
+state. Enrollment still probes the receiver, and transfers retain strict host
+identity checks. Loading an entry does not prove a backup was delivered and
+does not retry a failed upload.
+
+Catalog publication does not deploy to Home Assistant. Live acceptance of this
+app release, backup delivery and restore/rollback qualification remain separate
+operator steps; isolated image checks do not establish them.
 
 The catalog is [Velnio/r4sls08-apps](https://github.com/Velnio/r4sls08-apps).
 Installation requires Supervisor's registry account to have
 read/pull access to the private image. No GitHub token is needed in app options
 or in the running app. Never put credentials in this repository or in logs.
 
-The integration and app have separate versions. App 0.1.3 bundles integration
+The integration and app have separate versions. App 0.1.4 bundles integration
 0.1.3. The delivery profile accepts only Core **2026.9.3** and **2026.10.1**;
 other Core builds are refused. The earlier native integration pilot was
 verified on Core 2026.9.3. Integration compatibility with Core 2026.10.1 does not
@@ -71,9 +84,13 @@ A restart briefly interrupts Core automations and API availability. Choose a
 suitable maintenance window. After reading the result, restore
 `restart_core: false` and `operation: status` before another manual start.
 
-An exact, unmodified manually installed integration matching the bundled 0.1.3
-can be recognized and adopted. A recognized older managed installation with an
-unchanged receipt can use `update`; a manually installed older version without
+An exact, unmodified manually installed integration matching every file hash of
+the bundled payload can be recognized and adopted. The integration version
+alone is not sufficient: app 0.1.4 retains integration version 0.1.3 while
+shipping a different payload. A recognized managed installation can therefore
+require an update even when the integration version is unchanged. A recognized
+older managed installation with an unchanged receipt can use `update`; a manually
+installed older version without
 that receipt is refused as unknown and needs explicit operator reconciliation.
 Unknown, edited or newer installations are refused. There is no automatic
 downgrade, automatic retry or rollback option.

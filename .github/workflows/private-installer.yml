@@ -1,9 +1,9 @@
 name: Verify public catalog and generic Installer
 on:
   push:
-    paths: ['velnio_installer/**', 'tests/**', '.github/workflows/private-installer.yml']
+    paths: ['velnio_sftp/**', 'velnio_installer/**', 'tests/**', '.github/workflows/private-installer.yml']
   pull_request:
-    paths: ['velnio_installer/**', 'tests/**', '.github/workflows/private-installer.yml']
+    paths: ['velnio_sftp/**', 'velnio_installer/**', 'tests/**', '.github/workflows/private-installer.yml']
 permissions:
   contents: read
 jobs:
