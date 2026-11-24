@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.6 — 2026-11-24
+
+- Bundle integration 0.1.4 with native backup support for Supervisor
+  2026.11.0 and a HA Repairs warning when Supervisor is unsupported.
+- Publish the private AMD64 and ARM64 images qualified in release run
+  45399113633. The immutable index and platform digests are recorded in
+  `image-digests.json`.
+- Keep manual start, status-only defaults and the registered app permissions.
+
 ## 0.1.4 — 2026-11-08
 
 - Publish catalog metadata for the qualified private app 0.1.4 image, bundling

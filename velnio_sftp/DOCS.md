@@ -7,30 +7,29 @@ transfer backups itself and does not need to keep running.
 
 ## Availability
 
-App **0.1.4** bundles integration **0.1.3**. The private image is
-`ghcr.io/velnio/velnio-sftp-app:0.1.4`; its immutable multiarch digest is
-`sha256:3cb27c3be7a79a0d239f369b2c5d16d217c544d0c8cfe0c5ba936daf4ea4c743`.
-The release source is `f3cc33018a1564d8f24c5a9333e25e882a2e03d3`,
-tagged `sftp-app-v0.1.4`. [image-digests.json](image-digests.json) records the
-qualified platform manifests, config digests and verifier provenance.
+App **0.1.6** bundles integration **0.1.4**. The private image is
+`ghcr.io/velnio/velnio-sftp-app:0.1.6` and its immutable multiarch digest is
+`sha256:c6427db1c2231f84b11b3409dc7e79f40d882c34aa46be9eb2960a2ef9c3017e`.
+The release source is `1ee4f8cdd68442d56e9716ba8ad0126913a26875`, tagged
+`sftp-app-v0.1.6`. [image-digests.json](image-digests.json) records the
+qualified platform manifests, config digests and release evidence.
 
 Both linux/amd64 and linux/arm64 images passed network-isolated installation
 and update smoke checks in
-[release run 42519229985](https://github.com/Velnio/velnio-backup/actions/runs/42519229985).
-The original workflow nevertheless ended in **failure**: its final verifier
-mistook a manifest image ID for a config digest, and the final release artifact
-was not uploaded. The corrected verifier from commit
-`9c76419be0ef7c9554f8b75b08829e2ebb85fdc2` subsequently qualified these
-existing digests in a local read-only run. That verification matched the
-published manifests and configs to the exact smoke-tested images and checked
-private package visibility. It did not rerun the release workflow, rebuild an
-image or overwrite the tag.
+[release run 45399113633](https://github.com/Velnio/velnio-backup/actions/runs/45399113633).
+The successful workflow checked the existing private package, published the
+smoke-tested images, and verified the resulting index and its platform configs.
 
 The integration profile pins source
-`127d3c664b4a54bcb2918c3004603e7ecde3b0ec` and ZIP SHA-256
-`56cce5a70067d961f888cbfc2e8c50fce23ef0ac032ed4acbdabccae8db20c08`.
-Its closed payload contains thirteen integration, JSON and translation files
+`446b1938a6f73391444a441f611bc0bc8a52adb4` and ZIP SHA-256
+`36ad273daf035baf6dd7f0f439278d038e46f4d4995af2b4f58c7ed84e5af4a5`.
+Its closed payload contains fourteen integration, JSON and translation files
 and eight PNG brand assets. The payload itself remains private.
+
+The integration supports native backup creation through Supervisor
+`2026.10.5` and `2026.11.0`. HA Repairs reports a detected unsupported
+Supervisor version before backups run. Core checks at startup and every four
+minutes and clears the issue once it detects a supported version.
 
 This payload allows an already-bound integration to load when its receiver is
 temporarily unavailable, after validating its local protected key and trust
@@ -47,9 +46,9 @@ Installation requires Supervisor's registry account to have
 read/pull access to the private image. No GitHub token is needed in app options
 or in the running app. Never put credentials in this repository or in logs.
 
-The integration and app have separate versions. App 0.1.4 bundles integration
-0.1.3. The delivery profile accepts only Core **2026.9.3** and **2026.10.1**;
-other Core builds are refused. The earlier native integration pilot was
+The integration and app have separate versions. App 0.1.6 bundles integration
+0.1.4. The delivery profile accepts Core **2026.9.3** and **2026.10.1**.
+The earlier native integration pilot was
 verified on Core 2026.9.3. Integration compatibility with Core 2026.10.1 does not
 qualify a NAS worker to process that version's backup archives.
 
